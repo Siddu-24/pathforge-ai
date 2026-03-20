@@ -19,9 +19,9 @@ app.add_middleware(
 with open("courses.json") as f:
     COURSE_CATALOG = json.load(f)
 
-# Gemini setup — API key from environment variable
-genai.configure(api_key=os.environ.get("AIzaSyDzakLstBGMqsTybsVIpYUcVEdZ2Gq3dL0"))
-model = genai.GenerativeModel("gemini-1.5-flash")
+# Gemini setup
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
+model = genai.GenerativeModel("gemini-2.0-flash")  # ← fixed model name
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text = ""
@@ -46,7 +46,7 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "model": "gemini-1.5-flash"}
+    return {"status": "ok", "model": "gemini-2.0-flash"}
 
 @app.post("/analyze")
 async def analyze(
