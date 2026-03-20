@@ -478,11 +478,11 @@ const styles = `
 `;
 
 export default function App() {
-  const [resume, setResume]   = useState(null);
-  const [jd, setJd]           = useState(null);
-  const [result, setResult]   = useState(null);
+  const [resume, setResume] = useState(null);
+  const [jd, setJd] = useState(null);
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     if (!resume || !jd) {
@@ -498,7 +498,7 @@ export default function App() {
     formData.append("jd", jd);
 
     try {
-      const res = await fetch("http://localhost:8000/analyze", {
+      const res = await fetch("https://pathforge-ai-backend.onrender.com/analyze", {
         method: "POST",
         body: formData,
       });
@@ -516,7 +516,7 @@ export default function App() {
   const levelClass = (level = "") => {
     const l = level.toLowerCase();
     if (l === "intermediate") return "intermediate";
-    if (l === "advanced")     return "advanced";
+    if (l === "advanced") return "advanced";
     return "beginner";
   };
 
