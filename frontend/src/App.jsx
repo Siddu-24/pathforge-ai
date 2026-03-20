@@ -507,7 +507,7 @@ export default function App() {
       if (data.error) throw new Error(data.error);
       setResult(data);
     } catch (e) {
-      setError(e.message || "Something went wrong. Is the backend running on port 8000?");
+      setError(e.message || "Something went wrong. Is the backend running?");
     }
 
     setLoading(false);
@@ -516,7 +516,7 @@ export default function App() {
   const levelClass = (level = "") => {
     const l = level.toLowerCase();
     if (l === "intermediate") return "intermediate";
-    if (l === "advanced") return "advanced";
+    if (l === "advanced")     return "advanced";
     return "beginner";
   };
 
@@ -585,9 +585,10 @@ export default function App() {
           {loading ? "Analyzing..." : "Generate Learning Roadmap →"}
         </button>
 
+        {/* FIX 1 — updated status text */}
         {loading && (
           <p className="status-line">
-            Running skill extraction via local AI model. Please wait...
+            Running skill extraction via rule-based engine. Please wait...
           </p>
         )}
 
@@ -652,9 +653,10 @@ export default function App() {
         )}
 
         {/* ── Footer ── */}
+        {/* FIX 2 — updated footer text */}
         <footer className="footer">
           <span className="footer-left">PathForge AI · ARTPARK CodeForge Hackathon</span>
-          <span className="footer-right">FastAPI + React + Ollama (Mistral 7B)</span>
+          <span className="footer-right">FastAPI + React + Rule-Based Engine</span>
         </footer>
 
       </div>
