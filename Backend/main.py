@@ -143,9 +143,11 @@ def generate_reason(course: dict, skill_gap: set) -> str:
 def root():
     return {"status": "PathForge AI is running", "engine": "rule-based skill matcher"}
 
+
 @app.get("/health")
 def health():
     return {"status": "ok", "engine": "rule-based", "courses_loaded": len(COURSE_CATALOG)}
+
 
 @app.post("/analyze")
 async def analyze(
@@ -192,3 +194,9 @@ async def analyze(
         "skill_gap":        sorted(skill_gap),
         "learning_pathway": pathway
     }
+
+
+# ── Port binding fix for Render deployment ──────────────────────
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=10000)
