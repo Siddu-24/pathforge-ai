@@ -1,9 +1,10 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
-import requests
+import google.generativeai as genai
 import json
 import io
+import os
 
 app = FastAPI()
 
@@ -18,29 +19,11 @@ app.add_middleware(
 with open("courses.json") as f:
     COURSE_CATALOG = json.load(f)
 
-# Ollama runs locally — no API key needed
-OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "mistral"
-
-def call_ollama(prompt: str) -> str:
-    """Send a prompt to local Ollama and return the response text."""
-    try:
-        response = requests.post(OLLAMA_URL, json={
-            "model": OLLAMA_MODEL,
-            "prompt": prompt,
-            "stream": False
-        }, timeout=120)  # 2 min timeout — local models can be slow
-        response.raise_for_status()
-        return response.json()["response"]
-    except requests.exceptions.ConnectionError:
-        raise Exception("Ollama is not running. Please start it with: ollama serve")
-    except requests.exceptions.Timeout:
-        raise Exception("Ollama took too long to respond. Try again.")
-    except Exception as e:
-        raise Exception(f"Ollama error: {str(e)}")
+# Gemini setup — API key from environment variable
+genai.configure(api_key=os.environ.get("AIzaSyDzakLstBGMqsTybsVIpYUcVEdZ2Gq3dL0"))
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:
-    """Extract all text from a PDF file."""
     text = ""
     with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
         for page in pdf.pages:
@@ -48,7 +31,6 @@ def extract_text_from_pdf(file_bytes: bytes) -> str:
     return text.strip()
 
 def clean_json(raw: str) -> str:
-    """Remove markdown code fences if the model wraps output in them."""
     raw = raw.strip()
     if raw.startswith("```json"):
         raw = raw[7:]
@@ -58,30 +40,27 @@ def clean_json(raw: str) -> str:
         raw = raw[:-3]
     return raw.strip()
 
+@app.get("/")
+def root():
+    return {"status": "PathForge AI backend is running"}
+
 @app.get("/health")
-def health_check():
-    """Check if backend and Ollama are both running."""
-    try:
-        requests.get("http://localhost:11434", timeout=5)
-        return {"status": "ok", "ollama": "running", "model": OLLAMA_MODEL}
-    except:
-        return {"status": "ok", "ollama": "NOT running — start with: ollama serve"}
+def health():
+    return {"status": "ok", "model": "gemini-1.5-flash"}
 
 @app.post("/analyze")
 async def analyze(
     resume: UploadFile = File(...),
     jd: UploadFile = File(...)
 ):
-    # Step 1: Extract text from both PDFs
     resume_text = extract_text_from_pdf(await resume.read())
     jd_text = extract_text_from_pdf(await jd.read())
 
     if not resume_text:
-        return {"error": "Could not read resume PDF. Make sure it is not scanned/image-only."}
+        return {"error": "Could not read resume PDF."}
     if not jd_text:
         return {"error": "Could not read job description PDF."}
 
-    # Step 2: Build the catalog summary to send to the model
     catalog_summary = json.dumps([
         {
             "id": c["id"],
@@ -93,8 +72,7 @@ async def analyze(
         for c in COURSE_CATALOG
     ])
 
-    # Step 3: Build the prompt
-    prompt = f"""You are an expert HR onboarding AI. Your job is to analyze a resume and job description, find the skill gap, and recommend a personalized learning pathway.
+    prompt = f"""You are an expert HR onboarding AI. Analyze the resume and job description below.
 
 RESUME:
 {resume_text}
@@ -102,21 +80,19 @@ RESUME:
 JOB DESCRIPTION:
 {jd_text}
 
-AVAILABLE COURSE CATALOG (you must ONLY recommend courses from this list — do not invent new ones):
+AVAILABLE COURSE CATALOG (ONLY recommend courses from this list):
 {catalog_summary}
 
 Instructions:
-1. Extract the candidate's current skills from the resume.
-2. Extract the required skills from the job description.
-3. Find the skill gap: skills in the JD that are missing from the resume.
-4. Recommend courses ONLY from the catalog above that address the skill gap.
+1. Extract candidate's current skills from resume.
+2. Extract required skills from job description.
+3. Find skill gap: skills in JD missing from resume.
+4. Recommend courses ONLY from catalog that address the skill gap.
 5. Order courses: beginner first, advanced last.
-6. Assign a week number to each course starting from Week 1.
-7. For each course write one sentence explaining why it was chosen.
+6. Assign week numbers starting from Week 1.
+7. Write one sentence reason for each course.
 
-You MUST respond with ONLY a valid JSON object. No explanation before or after. No markdown. No extra text. Just the raw JSON.
-
-Use exactly this format:
+Respond ONLY with valid JSON, no extra text, no markdown:
 {{
   "candidate_skills": ["skill1", "skill2"],
   "required_skills": ["skill1", "skill2"],
@@ -133,19 +109,16 @@ Use exactly this format:
   ]
 }}"""
 
-    # Step 4: Call local Ollama
     try:
-        raw_response = call_ollama(prompt)
-    except Exception as e:
-        return {"error": str(e)}
-
-    # Step 5: Parse the JSON response
-    try:
-        cleaned = clean_json(raw_response)
+        response = model.generate_content(prompt)
+        raw = response.text
+        cleaned = clean_json(raw)
         result = json.loads(cleaned)
         return result
     except json.JSONDecodeError:
         return {
-            "error": "AI returned invalid JSON. Raw response below — try again.",
-            "raw": raw_response[:1000]
+            "error": "AI returned invalid JSON. Please try again.",
+            "raw": raw[:500]
         }
+    except Exception as e:
+        return {"error": str(e)}
