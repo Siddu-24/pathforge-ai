@@ -1,0 +1,272 @@
+[
+  {
+    "id": 1,
+    "title": "Python for Beginners",
+    "skill_tags": ["python", "programming", "scripting", "coding"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "5 hours",
+    "category": "technical"
+  },
+  {
+    "id": 2,
+    "title": "SQL & Database Fundamentals",
+    "skill_tags": ["sql", "database", "mysql", "postgresql", "data"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "4 hours",
+    "category": "technical"
+  },
+  {
+    "id": 3,
+    "title": "Git & Version Control Essentials",
+    "skill_tags": ["git", "github", "version control", "collaboration"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "3 hours",
+    "category": "technical"
+  },
+  {
+    "id": 4,
+    "title": "REST API Development with FastAPI",
+    "skill_tags": ["fastapi", "api", "backend", "python", "rest"],
+    "level": "intermediate",
+    "prerequisites": ["python"],
+    "duration": "4 hours",
+    "category": "technical"
+  },
+  {
+    "id": 5,
+    "title": "Docker & Containerization Basics",
+    "skill_tags": ["docker", "devops", "containerization", "deployment"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "3 hours",
+    "category": "technical"
+  },
+  {
+    "id": 6,
+    "title": "React.js for Frontend Development",
+    "skill_tags": ["react", "javascript", "frontend", "ui", "web development"],
+    "level": "intermediate",
+    "prerequisites": ["javascript"],
+    "duration": "8 hours",
+    "category": "technical"
+  },
+  {
+    "id": 7,
+    "title": "JavaScript Fundamentals",
+    "skill_tags": ["javascript", "js", "web", "frontend", "scripting"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "6 hours",
+    "category": "technical"
+  },
+  {
+    "id": 8,
+    "title": "Cloud Computing with AWS",
+    "skill_tags": ["aws", "cloud", "s3", "ec2", "lambda", "cloud computing"],
+    "level": "intermediate",
+    "prerequisites": [],
+    "duration": "6 hours",
+    "category": "technical"
+  },
+  {
+    "id": 9,
+    "title": "Machine Learning Fundamentals",
+    "skill_tags": ["machine learning", "ml", "scikit-learn", "data science", "ai"],
+    "level": "intermediate",
+    "prerequisites": ["python", "sql"],
+    "duration": "10 hours",
+    "category": "technical"
+  },
+  {
+    "id": 10,
+    "title": "Data Analysis with Pandas & NumPy",
+    "skill_tags": ["pandas", "numpy", "data analysis", "python", "data science"],
+    "level": "intermediate",
+    "prerequisites": ["python"],
+    "duration": "5 hours",
+    "category": "technical"
+  },
+  {
+    "id": 11,
+    "title": "Agile & Scrum Methodology",
+    "skill_tags": ["agile", "scrum", "project management", "sprint", "kanban"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "3 hours",
+    "category": "management"
+  },
+  {
+    "id": 12,
+    "title": "Business Communication & Professional Writing",
+    "skill_tags": ["communication", "writing", "email", "presentation", "soft skills"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "4 hours",
+    "category": "soft_skills"
+  },
+  {
+    "id": 13,
+    "title": "Microsoft Excel — Intermediate to Advanced",
+    "skill_tags": ["excel", "spreadsheet", "data", "reporting", "microsoft office"],
+    "level": "intermediate",
+    "prerequisites": [],
+    "duration": "5 hours",
+    "category": "operations"
+  },
+  {
+    "id": 14,
+    "title": "Leadership & Team Management",
+    "skill_tags": ["leadership", "management", "team", "mentoring", "people skills"],
+    "level": "intermediate",
+    "prerequisites": [],
+    "duration": "6 hours",
+    "category": "management"
+  },
+  {
+    "id": 15,
+    "title": "Workplace Safety & OSHA Compliance",
+    "skill_tags": ["safety", "osha", "compliance", "warehouse", "operations", "labor"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "2 hours",
+    "category": "operations"
+  },
+  {
+    "id": 16,
+    "title": "Inventory Management & Logistics",
+    "skill_tags": ["inventory", "logistics", "supply chain", "warehouse", "operations"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "4 hours",
+    "category": "operations"
+  },
+  {
+    "id": 17,
+    "title": "Customer Service Excellence",
+    "skill_tags": ["customer service", "crm", "support", "communication", "client relations"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "3 hours",
+    "category": "soft_skills"
+  },
+  {
+    "id": 18,
+    "title": "Financial Reporting & Budgeting Basics",
+    "skill_tags": ["finance", "budgeting", "accounting", "reporting", "financial analysis"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "5 hours",
+    "category": "finance"
+  },
+  {
+    "id": 19,
+    "title": "Digital Marketing Fundamentals",
+    "skill_tags": ["digital marketing", "seo", "social media", "google ads", "marketing"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "5 hours",
+    "category": "marketing"
+  },
+  {
+    "id": 20,
+    "title": "Cybersecurity Awareness & Best Practices",
+    "skill_tags": ["cybersecurity", "security", "data protection", "phishing", "compliance"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "2 hours",
+    "category": "technical"
+  },
+  {
+    "id": 21,
+    "title": "Advanced Python — OOP & Design Patterns",
+    "skill_tags": ["python", "oop", "design patterns", "advanced programming"],
+    "level": "advanced",
+    "prerequisites": ["python"],
+    "duration": "8 hours",
+    "category": "technical"
+  },
+  {
+    "id": 22,
+    "title": "Kubernetes & Microservices Architecture",
+    "skill_tags": ["kubernetes", "k8s", "microservices", "devops", "docker"],
+    "level": "advanced",
+    "prerequisites": ["docker"],
+    "duration": "8 hours",
+    "category": "technical"
+  },
+  {
+    "id": 23,
+    "title": "Product Management Essentials",
+    "skill_tags": ["product management", "roadmap", "user stories", "stakeholders", "pm"],
+    "level": "intermediate",
+    "prerequisites": [],
+    "duration": "6 hours",
+    "category": "management"
+  },
+  {
+    "id": 24,
+    "title": "Data Visualization with Power BI",
+    "skill_tags": ["power bi", "data visualization", "dashboard", "reporting", "bi"],
+    "level": "intermediate",
+    "prerequisites": [],
+    "duration": "5 hours",
+    "category": "operations"
+  },
+  {
+    "id": 25,
+    "title": "Time Management & Productivity Systems",
+    "skill_tags": ["time management", "productivity", "organization", "prioritization", "soft skills"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "2 hours",
+    "category": "soft_skills"
+  },
+  {
+    "id": 26,
+    "title": "HR Fundamentals & People Operations",
+    "skill_tags": ["hr", "human resources", "recruitment", "onboarding", "people operations"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "4 hours",
+    "category": "hr"
+  },
+  {
+    "id": 27,
+    "title": "Public Speaking & Presentation Skills",
+    "skill_tags": ["public speaking", "presentation", "communication", "storytelling", "soft skills"],
+    "level": "beginner",
+    "prerequisites": [],
+    "duration": "3 hours",
+    "category": "soft_skills"
+  },
+  {
+    "id": 28,
+    "title": "Advanced SQL — Query Optimization & Analytics",
+    "skill_tags": ["sql", "advanced sql", "analytics", "data warehouse", "performance"],
+    "level": "advanced",
+    "prerequisites": ["sql"],
+    "duration": "6 hours",
+    "category": "technical"
+  },
+  {
+    "id": 29,
+    "title": "TypeScript & Node.js Backend Development",
+    "skill_tags": ["typescript", "node.js", "backend", "javascript", "express"],
+    "level": "intermediate",
+    "prerequisites": ["javascript"],
+    "duration": "7 hours",
+    "category": "technical"
+  },
+  {
+    "id": 30,
+    "title": "Quality Assurance & Testing Fundamentals",
+    "skill_tags": ["qa", "testing", "unit tests", "automation", "quality assurance"],
+    "level": "intermediate",
+    "prerequisites": [],
+    "duration": "4 hours",
+    "category": "technical"
+  }
+]
