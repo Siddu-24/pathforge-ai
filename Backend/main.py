@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import pdfplumber
-import google.generativeai as genai
+from google import genai
 import json
 import io
 import os
@@ -19,9 +19,8 @@ app.add_middleware(
 with open("courses.json") as f:
     COURSE_CATALOG = json.load(f)
 
-# Gemini setup
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-2.0-flash")  # ← fixed model name
+# Gemini setup using new google.genai package
+client = genai.Client(api_key=os.environ.get("AIzaSyBoljiOyaOKvI1IDOlqsZyTy5mwYKuq9w8"))
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     text = ""
@@ -110,7 +109,10 @@ Respond ONLY with valid JSON, no extra text, no markdown:
 }}"""
 
     try:
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
         raw = response.text
         cleaned = clean_json(raw)
         result = json.loads(cleaned)
